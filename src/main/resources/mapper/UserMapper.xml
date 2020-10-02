@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="xyz.fusheng.exam.core.mapper.UserMapper">
+  <resultMap id="BaseResultMap" type="xyz.fusheng.exam.core.entity.User">
+    <!--@mbg.generated-->
+    <!--@Table sys_user-->
+    <id column="user_id" jdbcType="BIGINT" property="userId" />
+    <result column="username" jdbcType="VARCHAR" property="username" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="header" jdbcType="VARCHAR" property="header" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
+    <result column="mail" jdbcType="VARCHAR" property="mail" />
+    <result column="signature" jdbcType="VARCHAR" property="signature" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
+    <result column="realname" jdbcType="VARCHAR" property="realname" />
+    <result column="sex" jdbcType="BOOLEAN" property="sex" />
+    <result column="address" jdbcType="VARCHAR" property="address" />
+    <result column="created_time" jdbcType="TIMESTAMP" property="createdTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="version" jdbcType="INTEGER" property="version" />
+    <result column="is_deleted" jdbcType="BOOLEAN" property="isDeleted" />
+    <result column="is_enabled" jdbcType="BOOLEAN" property="isEnabled" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    user_id, username, `password`, `header`, phone, mail, signature, description, realname,
+    sex, address, created_time, update_time, version, is_deleted, is_enabled
+  </sql>
+  <!-- 根据用户id查询用户角色集合 -->
+  <select id="selectRolesByUserId" resultType="xyz.fusheng.exam.core.entity.Role" parameterType="long">
+        select r.* from sys_role r
+        left join sys_user_role ur on ur.role_id = r.role_id
+        where ur.user_id = #{userId}
+  </select>
+
+  <!-- 根据用户id查询用户权限集合 -->
+  <select id="selectMenusByUserId" resultType="xyz.fusheng.exam.core.entity.Menu">
+        select distinct  m.* from sys_user_role ur
+        left join sys_role_menu rm on ur.role_id = rm.role_id
+        left join sys_menu m on rm.menu_id = m.menu_id
+        where ur.user_id = #{userId}
+  </select>
+
+</mapper>

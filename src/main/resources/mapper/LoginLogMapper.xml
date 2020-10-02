@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="xyz.fusheng.exam.core.mapper.LoginLogMapper">
+  <resultMap id="BaseResultMap" type="xyz.fusheng.exam.core.entity.LoginLog">
+    <!--@mbg.generated-->
+    <!--@Table sys_login_log-->
+    <id column="login_log_id" jdbcType="BIGINT" property="loginLogId" />
+    <result column="user_name" jdbcType="VARCHAR" property="userName" />
+    <result column="ip_address" jdbcType="VARCHAR" property="ipAddress" />
+    <result column="login_location" jdbcType="VARCHAR" property="loginLocation" />
+    <result column="browser_type" jdbcType="VARCHAR" property="browserType" />
+    <result column="os_type" jdbcType="VARCHAR" property="osType" />
+    <result column="login_status" jdbcType="BOOLEAN" property="loginStatus" />
+    <result column="login_type" jdbcType="BOOLEAN" property="loginType" />
+    <result column="msg" jdbcType="VARCHAR" property="msg" />
+    <result column="login_time" jdbcType="TIMESTAMP" property="loginTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    login_log_id, user_name, ip_address, login_location, browser_type, os_type, login_status,
+    login_type, msg, login_time
+  </sql>
+</mapper>

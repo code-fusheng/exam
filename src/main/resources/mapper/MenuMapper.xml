@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="xyz.fusheng.exam.core.mapper.MenuMapper">
+  <resultMap id="BaseResultMap" type="xyz.fusheng.exam.core.entity.Menu">
+    <!--@mbg.generated-->
+    <!--@Table sys_menu-->
+    <id column="menu_id" jdbcType="BIGINT" property="menuId" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="permission" jdbcType="VARCHAR" property="permission" />
+    <result column="path" jdbcType="VARCHAR" property="path" />
+    <result column="pid" jdbcType="INTEGER" property="pid" />
+    <result column="level" jdbcType="TINYINT" property="level" />
+    <result column="created_time" jdbcType="TIMESTAMP" property="createdTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="version" jdbcType="INTEGER" property="version" />
+    <result column="is_deleted" jdbcType="BOOLEAN" property="isDeleted" />
+    <result column="is_enabled" jdbcType="BOOLEAN" property="isEnabled" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    menu_id, `name`, permission, `path`, pid, `level`, created_time, update_time, version,
+    is_deleted, is_enabled
+  </sql>
+</mapper>
