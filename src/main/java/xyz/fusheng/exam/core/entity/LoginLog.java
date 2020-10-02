@@ -1,5 +1,6 @@
 package xyz.fusheng.exam.core.entity;
 
+import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.util.Date;
@@ -16,6 +17,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@TableName("sys_login_log")
 public class LoginLog {
     /**
     * 登录日志编号
@@ -57,13 +59,13 @@ public class LoginLog {
     * 登录状态 （0 成功；1 失败 默认 0）
     */
     @ApiModelProperty(value="登录状态 （0 成功；1 失败 默认 0）")
-    private Boolean loginStatus;
+    private Integer loginStatus;
 
     /**
     * 用户类型 （0 管理员；1 普通用户 默认 1）
     */
     @ApiModelProperty(value="用户类型 （0 管理员；1 普通用户 默认 1）")
-    private Boolean loginType;
+    private Integer loginType;
 
     /**
     * 消息提示

@@ -83,11 +83,11 @@ public class Menu {
     */
     @ApiModelProperty(value="逻辑删除位 1：已删除 0：未删除")
     @TableLogic
-    private Boolean isDeleted;
+    private Integer isDeleted;
 
     /**
     * 状态位 1：启用 0：弃用
     */
     @ApiModelProperty(value="状态位 1：启用 0：弃用")
-    private Boolean isEnabled;
+    private Integer isEnabled;
 }
