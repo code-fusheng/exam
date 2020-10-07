@@ -17,7 +17,7 @@ import java.util.Date;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class LoginLogDto {
+public class LoginLogDto extends BaseDto {
    /**
    * 登录日志编号
    */

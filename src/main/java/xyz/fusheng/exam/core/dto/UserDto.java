@@ -22,7 +22,7 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @TableName("sys_user")
-public class UserDto {
+public class UserDto extends BaseDto{
    /**
    * 用户ID
    */

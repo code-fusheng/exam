@@ -1,6 +1,5 @@
 package xyz.fusheng.exam.core.service;
 
-import xyz.fusheng.exam.core.dto.LoginLogDto;
 import xyz.fusheng.exam.core.entity.LoginLog;
 
 /**

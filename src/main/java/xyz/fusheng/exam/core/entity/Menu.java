@@ -22,7 +22,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @TableName("sys_menu")
-public class Menu {
+public class Menu extends BaseEntity {
     /**
     * ID
     */
@@ -64,7 +64,7 @@ public class Menu {
     * 创建时间
     */
     @ApiModelProperty(value="创建时间")
-    private Date createdTime;
+    private Date createTime;
 
     /**
     * 更新时间

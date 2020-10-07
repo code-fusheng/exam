@@ -1,5 +1,6 @@
 package xyz.fusheng.exam.core.entity;
 
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -18,11 +19,12 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @TableName("sys_login_log")
-public class LoginLog {
+public class LoginLog extends BaseEntity {
     /**
     * 登录日志编号
     */
     @ApiModelProperty(value="登录日志编号")
+    @TableId
     private Long loginLogId;
 
     /**

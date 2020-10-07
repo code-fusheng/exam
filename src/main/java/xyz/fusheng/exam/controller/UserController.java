@@ -4,11 +4,8 @@ package xyz.fusheng.exam.controller; /**
  */
 
 import io.swagger.annotations.Api;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import xyz.fusheng.exam.common.utils.Result;
 import xyz.fusheng.exam.core.service.UserService;
 
 import javax.annotation.Resource;

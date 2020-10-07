@@ -21,7 +21,7 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @TableName("sys_user")
-public class User {
+public class User extends BaseEntity{
     /**
     * 用户ID
     */

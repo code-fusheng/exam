@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="xyz.fusheng.exam.core.mapper.RepositoryMapper">
+  <resultMap id="BaseResultMap" type="xyz.fusheng.exam.core.entity.Repository">
+    <!--@mbg.generated-->
+    <!--@Table ex_repository-->
+    <id column="repository_id" jdbcType="BIGINT" property="repositoryId" />
+    <result column="repository_name" jdbcType="VARCHAR" property="repositoryName" />
+    <result column="question_count" jdbcType="INTEGER" property="questionCount" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="created_time" jdbcType="TIMESTAMP" property="createdTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="created_by" jdbcType="BIGINT" property="createdBy" />
+    <result column="update_by" jdbcType="BIGINT" property="updateBy" />
+    <result column="version" jdbcType="INTEGER" property="version" />
+    <result column="is_deleted" jdbcType="BOOLEAN" property="isDeleted" />
+    <result column="is_enabled" jdbcType="BOOLEAN" property="isEnabled" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    repository_id, repository_name, question_count, remark, created_by, update_by, created_time, update_time,
+    version, is_deleted, is_enabled
+  </sql>
+
+  <!-- 查询题库视图 -->
+  <select id="getRepositoryVoById" resultType="xyz.fusheng.exam.core.vo.RepositoryVo">
+    select r.*, su1.username as createdUserName, su2.username as updateUserName
+    from ex_repository r left join sys_user su1 on r.created_by = su1.user_id
+                         left join sys_user su2 on r.update_by = su2.user_id
+    where repository_id = #{repositoryId}
+  </select>
+
+</mapper>

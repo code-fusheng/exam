@@ -40,7 +40,7 @@ public class JwtTokenUtil {
                 // 签发者
                 .setIssuer("zh")
                 // 自定义属性，放入用户拥有的权限
-                .claim("authorities", JSON.toJSONString(selfUser))
+                .claim("authorities", JSON.toJSONString(selfUser.getAuthorities()))
                 // 失效时间
                 .setExpiration(new Date(System.currentTimeMillis() + JwtConfig.expiration))
                 // 签名算法和密钥

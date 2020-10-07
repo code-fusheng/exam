@@ -45,6 +45,17 @@ public class SecurityUtil {
     }
 
     /**
+     * 获取当前用户真实姓名
+     */
+    public static String getRealname() {
+        if (StringUtils.isNotBlank(getUserInfo().getRealname())) {
+            return getUserInfo().getRealname();
+        } else {
+            return "佚名";
+        }
+    }
+
+    /**
      * 构造登录信息
      *
      * @param request
