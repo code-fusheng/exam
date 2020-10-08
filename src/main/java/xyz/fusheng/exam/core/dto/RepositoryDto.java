@@ -6,6 +6,8 @@ package xyz.fusheng.exam.core.dto;
  */
 
 import com.baomidou.mybatisplus.annotation.*;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
@@ -32,6 +34,7 @@ public class RepositoryDto extends BaseDto {
      * 题库编号
      */
     @ApiModelProperty(value="题库编号")
+    // @JsonSerialize(using= ToStringSerializer.class)
     private Long repositoryId;
 
     /**
@@ -80,12 +83,12 @@ public class RepositoryDto extends BaseDto {
      * 逻辑删除位 1：已删除 0：未删除
      */
     @ApiModelProperty(value="逻辑删除位 1：已删除 0：未删除")
-    private Boolean isDeleted;
+    private Integer isDeleted;
 
     /**
      * 状态位 1：启用 0：弃用
      */
     @ApiModelProperty(value="状态位 1：启用 0：弃用")
-    private Boolean isEnabled;
+    private Integer isEnabled;
 
 }

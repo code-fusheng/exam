@@ -24,6 +24,11 @@ public class UserServiceImpl implements UserService {
     @Resource
     private UserMapper userMapper;
 
+    @Override
+    public User selectUserInfoById(Long userId) {
+        return userMapper.selectById(userId);
+    }
+
     /**
      * 根据用户名查询用户实体
      * @param username

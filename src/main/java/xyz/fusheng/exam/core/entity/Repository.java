@@ -1,6 +1,8 @@
 package xyz.fusheng.exam.core.entity;
 
 import com.baomidou.mybatisplus.annotation.*;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.util.Date;
@@ -23,6 +25,7 @@ public class Repository extends BaseEntity {
     */
     @ApiModelProperty(value="题库编号")
     @TableId(value = "repository_id", type = IdType.INPUT)
+    // @JsonSerialize(using= ToStringSerializer.class)
     private Long repositoryId;
 
     /**
@@ -79,11 +82,11 @@ public class Repository extends BaseEntity {
     */
     @ApiModelProperty(value="逻辑删除位 1：已删除 0：未删除")
     @TableLogic
-    private Boolean isDeleted;
+    private Integer isDeleted;
 
     /**
     * 状态位 1：启用 0：弃用
     */
     @ApiModelProperty(value="状态位 1：启用 0：弃用")
-    private Boolean isEnabled;
+    private Integer isEnabled;
 }

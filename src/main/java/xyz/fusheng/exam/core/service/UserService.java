@@ -13,6 +13,13 @@ import java.util.List;
 public interface UserService {
 
     /**
+     * 根据Id获取用户信息
+     * @param userId
+     * @return
+     */
+    User selectUserInfoById(Long userId);
+
+    /**
      * 根据用户名查询用户实体
      * @param username
      * @return

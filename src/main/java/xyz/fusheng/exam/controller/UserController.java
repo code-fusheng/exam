@@ -26,6 +26,4 @@ public class UserController {
     @Resource
     private UserService userService;
 
-
-
 }

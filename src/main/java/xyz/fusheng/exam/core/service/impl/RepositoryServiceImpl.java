@@ -4,6 +4,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 
+import xyz.fusheng.exam.common.utils.Page;
 import xyz.fusheng.exam.common.utils.SecurityUtil;
 import xyz.fusheng.exam.core.dto.RepositoryDto;
 import xyz.fusheng.exam.core.entity.Repository;
@@ -73,6 +74,22 @@ public class RepositoryServiceImpl implements RepositoryService{
          RepositoryVo repositoryVo = repositoryMapper.getRepositoryVoById(repositoryId);
          // 查询题库试题数
          return repositoryVo;
+    }
+
+    /**
+     * 自定义分页查询题库
+     * @param page
+     * @return
+     */
+    @Override
+    public Page<RepositoryVo> getByPage(Page<RepositoryVo> page) {
+        // 查询数据
+        List<RepositoryVo> repositoryVoList = repositoryMapper.getByPage(page);
+        page.setList(repositoryVoList);
+        // 统计总数
+        int totalCount = repositoryMapper.getCountByPage(page);
+        page.setTotalCount(totalCount);
+        return page;
     }
 
 

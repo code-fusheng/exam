@@ -64,7 +64,7 @@ public class Menu extends BaseEntity {
     * 创建时间
     */
     @ApiModelProperty(value="创建时间")
-    private Date createTime;
+    private Date createdTime;
 
     /**
     * 更新时间

@@ -6,7 +6,7 @@ import xyz.fusheng.exam.core.entity.Menu;
 
  /**
   * @author:   code-fusheng
-  * @Date:     2020/9/30 8:47
+  * @Date:   2020/9/30 8:47
   */
 
 public interface MenuMapper extends BaseMapper<Menu> {

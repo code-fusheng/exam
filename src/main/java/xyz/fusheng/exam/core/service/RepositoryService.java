@@ -1,5 +1,6 @@
 package xyz.fusheng.exam.core.service;
 
+import xyz.fusheng.exam.common.utils.Page;
 import xyz.fusheng.exam.core.dto.RepositoryDto;
 import xyz.fusheng.exam.core.vo.RepositoryVo;
 
@@ -33,4 +34,11 @@ public interface RepositoryService {
      * @return
      */
     RepositoryVo getById(Long repositoryId);
+
+    /**
+     * 自定义分页查询题库
+     * @param page
+     * @return
+     */
+    Page<RepositoryVo> getByPage(Page<RepositoryVo> page);
 }

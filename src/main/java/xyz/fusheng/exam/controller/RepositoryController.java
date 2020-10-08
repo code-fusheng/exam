@@ -3,15 +3,16 @@ package xyz.fusheng.exam.controller;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
-import xyz.fusheng.exam.common.utils.IdWorker;
-import xyz.fusheng.exam.common.utils.Result;
-import xyz.fusheng.exam.common.utils.SecurityUtil;
+import xyz.fusheng.exam.common.enums.ResultEnums;
+import xyz.fusheng.exam.common.utils.*;
 import xyz.fusheng.exam.core.dto.RepositoryDto;
 import xyz.fusheng.exam.core.entity.Repository;
 import xyz.fusheng.exam.core.service.RepositoryService;
 import xyz.fusheng.exam.core.vo.RepositoryVo;
 
 import javax.annotation.Resource;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * @FileName: RepositoryController
@@ -78,6 +79,29 @@ public class RepositoryController {
     public Result<RepositoryVo> getById(@PathVariable Long repositoryId) {
         RepositoryVo repositoryVo = repositoryService.getById(repositoryId);
         return new Result<>("操作提示: 查询成功!", repositoryVo);
+    }
+
+    /**
+     * 分页查询题库
+     * @param page
+     * @return
+     */
+    @PostMapping("/getByPage")
+    public Result<Page<RepositoryVo>> getByPage(@RequestBody Page<RepositoryVo> page) {
+        String sortColumn = page.getSortColumn();
+        // 驼峰转下划线
+        String newSortColumn = StringUtils.upperCharToUnderLine(sortColumn);
+        page.setSortColumn(newSortColumn);
+        if (StringUtils.isNotBlank(sortColumn)) {
+            // 题库名、题目总数、
+            String[] sortColumns = {"repository_name", "question_count", "created_time", "update_time"};
+            List<String> sortList = Arrays.asList(sortColumns);
+            if (!sortList.contains(newSortColumn.toLowerCase())) {
+                return new Result<>(ResultEnums.ERROR.getCode(), "操作提示: 参数错误!");
+            }
+        }
+        page = repositoryService.getByPage(page);
+        return new Result<>("操作提示: 分页查询成功!", page);
     }
 
 }
