@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="xyz.fusheng.exam.core.mapper.DictDataMapper">
+  <resultMap id="BaseResultMap" type="xyz.fusheng.exam.core.entity.DictData">
+    <!--@mbg.generated-->
+    <!--@Table sys_dict_data-->
+    <result column="dict_code" jdbcType="BIGINT" property="dictCode" />
+    <result column="dict_sort" jdbcType="INTEGER" property="dictSort" />
+    <result column="dict_label" jdbcType="VARCHAR" property="dictLabel" />
+    <result column="dict_value" jdbcType="VARCHAR" property="dictValue" />
+    <result column="dict_type" jdbcType="VARCHAR" property="dictType" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="created_time" jdbcType="TIMESTAMP" property="createdTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="created_by" jdbcType="BIGINT" property="createdBy" />
+    <result column="update_by" jdbcType="BIGINT" property="updateBy" />
+    <result column="version" jdbcType="INTEGER" property="version" />
+    <result column="is_deleted" jdbcType="BOOLEAN" property="isDeleted" />
+    <result column="is_enabled" jdbcType="BOOLEAN" property="isEnabled" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    dict_code, dict_sort, dict_label, dict_value, dict_type, remark, created_time, update_time,
+    created_by, update_by, version, is_deleted, is_enabled
+  </sql>
+
+  <select id="getDictDataVoById" resultType="xyz.fusheng.exam.core.vo.DictDataVo">
+    select sdd.*, su1.username as createdUserName, su2.username as updateUserName
+    from sys_dict_data sdd left join sys_user su1 on sdd.created_by = su1.user_id
+                           left join sys_user su2 on sdd.update_by = su2.user_id
+    where sdd.dict_code = #{dictCode} and sdd.is_deleted = 0
+  </select>
+
+  <select id="getByPage" resultType="xyz.fusheng.exam.core.vo.DictDataVo" parameterType="xyz.fusheng.exam.common.utils.Page">
+    select sdd.*, su1.username as createdUserName, su2.username as updateUserName
+    from sys_dict_data sdd left join sys_user su1 on sdd.created_by = su1.user_id
+                           left join sys_user su2 on sdd.update_by = su2.user_id
+    where sdd.is_deleted = 0
+    <if test="params.dictType != null and params.dictType != ''">
+        and sdd.dict_type like concat(#{params.dictType}, '%')
+    </if>
+    <if test="params.dictLabel != null and params.dictLabel != ''">
+        and sdd.dict_label like concat(#{params.dictLabel}, '%')
+    </if>
+    <if test="params.dictValue != null and params.dictValue != ''">
+        and sdd.dict_value like concat(#{params.dictValue}, '%')
+    </if>
+    <if test="params.createdUserName != null">
+        and su1.username like concat(#{params.createdUserName}, '%')
+    </if>
+    <if test="params.isEnabled != null">
+        and sdd.is_enabled = #{params.isEnabled}
+    </if>
+    <if test="params.dictDataTime != null">
+        and sdd.created_time between #{params.dictDataTime[0], jdbcType=TIMESTAMP} and #{params.dictDataTime[1], jdbcType=TIMESTAMP}
+    </if>
+    <if test="sortColumn !=null and sortColumn != ''">
+        order by ${sortColumn} ${sortMethod}
+    </if>
+    limit #{index}, #{pageSize}
+  </select>
+
+  <select id="getCountByPage" resultType="java.lang.Integer" parameterType="xyz.fusheng.exam.common.utils.Page">
+    select count(*)
+    from sys_dict_data sdd left join sys_user su1 on sdd.created_by = su1.user_id
+                           left join sys_user su2 on sdd.update_by = su2.user_id
+    where sdd.is_deleted = 0
+    <if test="params.dictType != null and params.dictType != ''">
+        and sdd.dict_type like concat(#{params.dictType}, '%')
+    </if>
+    <if test="params.dictLabel != null and params.dictLabel != ''">
+        and sdd.dict_label like concat(#{params.dictLabel}, '%')
+    </if>
+    <if test="params.dictValue != null and params.dictValue != ''">
+        and sdd.dict_value like concat(#{params.dictValue}, '%')
+    </if>
+    <if test="params.createdUserName != null">
+        and su1.username like concat(#{params.createdUserName}, '%')
+    </if>
+    <if test="params.isEnabled != null">
+        and sdd.is_enabled = #{params.isEnabled}
+    </if>
+    <if test="params.dictDataTime != null">
+        and sdd.created_time between #{params.dictDataTime[0], jdbcType=TIMESTAMP} and #{params.dictDataTime[1], jdbcType=TIMESTAMP}
+    </if>
+  </select>
+</mapper>

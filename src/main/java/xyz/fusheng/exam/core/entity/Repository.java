@@ -1,13 +1,12 @@
 package xyz.fusheng.exam.core.entity;
 
 import com.baomidou.mybatisplus.annotation.*;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.util.Date;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
  /**
@@ -16,6 +15,7 @@ import lombok.NoArgsConstructor;
   */
 @ApiModel(value="xyz-fusheng-exam-core-entity-Repository")
 @Data
+@EqualsAndHashCode(callSuper=true)
 @AllArgsConstructor
 @NoArgsConstructor
 @TableName("ex_repository")
@@ -25,7 +25,6 @@ public class Repository extends BaseEntity {
     */
     @ApiModelProperty(value="题库编号")
     @TableId(value = "repository_id", type = IdType.INPUT)
-    // @JsonSerialize(using= ToStringSerializer.class)
     private Long repositoryId;
 
     /**

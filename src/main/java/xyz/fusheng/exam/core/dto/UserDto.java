@@ -7,6 +7,7 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotBlank;
@@ -17,11 +18,11 @@ import java.util.Date;
  * @Date:     2020/9/30 8:40
  * 系统用户表
  */
-@ApiModel(value="xyz-fusheng-exam-core-entity-User")
+@ApiModel(value="xyz-fusheng-exam-core-dto-User")
 @Data
+@EqualsAndHashCode(callSuper=true)
 @AllArgsConstructor
 @NoArgsConstructor
-@TableName("sys_user")
 public class UserDto extends BaseDto{
    /**
    * 用户ID

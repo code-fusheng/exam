@@ -1,6 +1,7 @@
 package xyz.fusheng.exam.controller;
 
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -31,6 +32,7 @@ public class AdminController {
      * 获取当前用户信息（前端需求接口）
      * @return
      */
+    @ApiOperation(value = "获取用户信息", notes = "获取当前登录用户信息")
     @GetMapping("/info")
     public Result<User> info() {
         Long userId  = SecurityUtil.getUserId();

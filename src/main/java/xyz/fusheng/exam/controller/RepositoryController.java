@@ -8,6 +8,7 @@ import xyz.fusheng.exam.common.utils.*;
 import xyz.fusheng.exam.core.dto.RepositoryDto;
 import xyz.fusheng.exam.core.entity.Repository;
 import xyz.fusheng.exam.core.service.RepositoryService;
+import xyz.fusheng.exam.core.vo.QuestionVo;
 import xyz.fusheng.exam.core.vo.RepositoryVo;
 
 import javax.annotation.Resource;
@@ -50,6 +51,7 @@ public class RepositoryController {
      * @param repositoryIds
      * @return
      */
+    @ApiOperation(value = "删除题库", notes = "删除题库")
     @DeleteMapping("/deleteByIds/{repositoryIds}")
     public Result<Object> deleteByIds(@PathVariable Long[] repositoryIds) {
         repositoryService.deleteByIds(repositoryIds);
@@ -61,6 +63,7 @@ public class RepositoryController {
      * @param repositoryDto
      * @return
      */
+    @ApiOperation(value = "修改题库", notes = "修改题库")
     @PutMapping("/update")
     public Result<Object> update(@RequestBody RepositoryDto repositoryDto) {
         // 修改之前会进行一次查询操作，所以会有缓存，此时再查询同样的数据效率会高一些，此处并不影响性能
@@ -75,6 +78,7 @@ public class RepositoryController {
      * @param repositoryId
      * @return
      */
+    @ApiOperation(value = "查询单个题库详情", notes = "根据id查询题库详情")
     @GetMapping("/getById/{repositoryId}")
     public Result<RepositoryVo> getById(@PathVariable Long repositoryId) {
         RepositoryVo repositoryVo = repositoryService.getById(repositoryId);
@@ -86,6 +90,7 @@ public class RepositoryController {
      * @param page
      * @return
      */
+    @ApiOperation(value = "分页查询题库详情", notes = "分页查询题库详情")
     @PostMapping("/getByPage")
     public Result<Page<RepositoryVo>> getByPage(@RequestBody Page<RepositoryVo> page) {
         String sortColumn = page.getSortColumn();
@@ -93,7 +98,7 @@ public class RepositoryController {
         String newSortColumn = StringUtils.upperCharToUnderLine(sortColumn);
         page.setSortColumn(newSortColumn);
         if (StringUtils.isNotBlank(sortColumn)) {
-            // 题库名、题目总数、
+            // 题库名、题目总数、创建时间、更新时间
             String[] sortColumns = {"repository_name", "question_count", "created_time", "update_time"};
             List<String> sortList = Arrays.asList(sortColumns);
             if (!sortList.contains(newSortColumn.toLowerCase())) {

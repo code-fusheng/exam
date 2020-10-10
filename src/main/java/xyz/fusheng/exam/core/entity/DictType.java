@@ -1,9 +1,9 @@
 package xyz.fusheng.exam.core.entity;
 
-import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.Version;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.util.Date;
@@ -14,53 +14,39 @@ import lombok.NoArgsConstructor;
 
  /**
   * @author:   code-fusheng
-  * @Date:     2020/9/30 8:47
-  * * 权限表
+  * @Date:     2020/10/9 8:32
   */
-
-@ApiModel(value="xyz-fusheng-exam-core-entity-Menu")
+@ApiModel(value="xyz-fusheng-exam-core-entity-DictType")
 @Data
 @EqualsAndHashCode(callSuper=true)
 @AllArgsConstructor
 @NoArgsConstructor
-@TableName("sys_menu")
-public class Menu extends BaseEntity {
+@TableName("sys_dict_type")
+public class DictType extends BaseEntity {
     /**
-    * ID
+    * 字典编号
     */
-    @ApiModelProperty(value="ID")
-    @TableId(value = "menu_id", type = IdType.INPUT)
-    private Long menuId;
+    @ApiModelProperty(value="字典编号")
+    @TableId
+    private Long dictId;
 
     /**
-    * 权限名称
+    * 字典名称
     */
-    @ApiModelProperty(value="权限名称")
-    private String name;
+    @ApiModelProperty(value="字典名称")
+    private String dictName;
 
     /**
-    * 权限标识
+    * 字典类型
     */
-    @ApiModelProperty(value="权限标识")
-    private String permission;
+    @ApiModelProperty(value="字典类型")
+    private String dictType;
 
     /**
-    * 权限路由
+    * 备注
     */
-    @ApiModelProperty(value="权限路由")
-    private String path;
-
-    /**
-    * 父级id
-    */
-    @ApiModelProperty(value="父级id")
-    private Integer pid;
-
-    /**
-    * 权限级别 1 2 3
-    */
-    @ApiModelProperty(value="权限级别 1 2 3")
-    private Byte level;
+    @ApiModelProperty(value="备注")
+    private String remark;
 
     /**
     * 创建时间
@@ -75,9 +61,22 @@ public class Menu extends BaseEntity {
     private Date updateTime;
 
     /**
+    * 试题创建者
+    */
+    @ApiModelProperty(value="试题创建者")
+    private Long createdBy;
+
+    /**
+    * 试题更新者
+    */
+    @ApiModelProperty(value="试题更新者")
+    private Long updateBy;
+
+    /**
     * 乐观锁 默认1
     */
     @ApiModelProperty(value="乐观锁 默认1")
+    @Version
     private Integer version;
 
     /**

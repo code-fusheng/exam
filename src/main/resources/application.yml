@@ -51,6 +51,7 @@ spring:
     date-format: yyyy-MM-dd HH:mm:ss
   # 后台日期格式化
   jackson:
+    default-property-inclusion: non_null    # 实体类与json互转的时候 属性值为null的不参与序列化
     date-format: yyyy-MM-dd HH:mm:ss
     time-zone: GMT+8
 

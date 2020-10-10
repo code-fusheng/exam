@@ -4,6 +4,7 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
@@ -13,8 +14,9 @@ import java.util.Date;
  * @Date:     2020/10/2 0:13
  */
 
-@ApiModel(value="xyz-fusheng-exam-core-entity-LoginLog")
+@ApiModel(value="xyz-fusheng-exam-core-dto-LoginLog")
 @Data
+@EqualsAndHashCode(callSuper=true)
 @AllArgsConstructor
 @NoArgsConstructor
 public class LoginLogDto extends BaseDto {

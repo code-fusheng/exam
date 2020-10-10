@@ -27,7 +27,7 @@
     select r.*, su1.username as createdUserName, su2.username as updateUserName
     from ex_repository r left join sys_user su1 on r.created_by = su1.user_id
                          left join sys_user su2 on r.update_by = su2.user_id
-    where repository_id = #{repositoryId}
+    where r.repository_id = #{repositoryId} and r.is_deleted = 0
   </select>
 
   <select id="getByPage" resultType="xyz.fusheng.exam.core.vo.RepositoryVo" parameterType="xyz.fusheng.exam.common.utils.Page">
@@ -36,10 +36,10 @@
                          left join sys_user su2 on r.update_by = su2.user_id
     where r.is_deleted = 0
     <if test="params.repositoryName != null and params.repositoryName != ''">
-        and r.repository_name like concat('%', #{params.repositoryName}, '%')
+        and r.repository_name like concat(#{params.repositoryName}, '%')
     </if>
     <if test="params.createdUserName != null and params.createdUserName != ''">
-        and su1.username like concat('%', #{params.createdUserName}, '%')
+        and su1.username like concat(#{params.createdUserName}, '%')
     </if>
     <if test="params.isEnabled != null">
         and r.is_enabled = #{params.isEnabled}
@@ -59,10 +59,10 @@
                          left join sys_user su2 on r.update_by = su2.user_id
     where r.is_deleted = 0
     <if test="params.repositoryName != null and params.repositoryName != ''">
-        and r.repository_name like concat('%', #{params.repositoryName}, '%')
+        and r.repository_name like concat(#{params.repositoryName}, '%')
     </if>
     <if test="params.createdUserName != null and params.createdUserName != ''">
-        and su1.username like concat('%', #{params.createdUserName}, '%')
+        and su1.username like concat(#{params.createdUserName}, '%')
     </if>
     <if test="params.isEnabled != null">
         and r.is_enabled = #{params.isEnabled}

@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="xyz.fusheng.exam.core.mapper.AnswerMapper">
+  <resultMap id="BaseResultMap" type="xyz.fusheng.exam.core.entity.Answer">
+    <!--@mbg.generated-->
+    <!--@Table ex_answer-->
+    <id column="answer_id" jdbcType="BIGINT" property="answerId" />
+    <result column="answer_content" jdbcType="VARCHAR" property="answerContent" />
+    <result column="answer_image" jdbcType="VARCHAR" property="answerImage" />
+    <result column="answer_video" jdbcType="VARCHAR" property="answerVideo" />
+    <result column="answer_code" jdbcType="VARCHAR" property="answerCode" />
+    <result column="answer_sort" jdbcType="INTEGER" property="answerSort" />
+    <result column="is_right" jdbcType="INTEGER" property="isRight" />
+    <result column="analysis" jdbcType="VARCHAR" property="analysis" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="question_id" jdbcType="BIGINT" property="questionId" />
+    <result column="created_time" jdbcType="TIMESTAMP" property="createdTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="created_by" jdbcType="BIGINT" property="createdBy" />
+    <result column="update_by" jdbcType="BIGINT" property="updateBy" />
+    <result column="version" jdbcType="INTEGER" property="version" />
+    <result column="is_deleted" jdbcType="INTEGER" property="isDeleted" />
+    <result column="is_enabled" jdbcType="INTEGER" property="isEnabled" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    answer_id, answer_content, answer_image, answer_video, answer_code, answer_sort, is_right, analysis,
+    remark, question_id, created_time, update_time, created_by, update_by, version, is_deleted,
+    is_enabled
+  </sql>
+
+  <select id="getAnswerVoById" resultType="xyz.fusheng.exam.core.vo.AnswerVo">
+    select a.*, su1.username as createdUserName, su2.username as updateUserName
+    from ex_answer a left join sys_user su1 on a.created_by = su1.user_id
+                     left join sys_user su2 on a.update_by = su2.user_id
+    where a.answer_id = #{answerId} and a.is_deleted = 0
+  </select>
+
+  <select id="getByPage" resultType="xyz.fusheng.exam.core.vo.AnswerVo">
+    select a.*, su1.username as createdUserName, su2.username as updateUserName
+    from ex_answer a left join sys_user su1 on a.created_by = su1.user_id
+                     left join sys_user su2 on a.update_by = su2.user_id
+    where a.is_deleted = 0
+    <if test="params.answerContent != null and params.answerContent != ''">
+        and a.answer_content like concat(#{params.answerContent}, '%')
+    </if>
+    <if test="params.isRight != null and params.isRight != ''">
+        and a.is_right = #{params.isRight}
+    </if>
+    <if test="params.createdUserName != null and params.createdUserName != ''">
+        and su1.username like concat(#{params.createdUserName}, '%')
+    </if>
+    <if test="params.isEnabled != null">
+        and a.is_enabled = #{params.isEnabled}
+    </if>
+    <if test="params.questionTime != null">
+        and a.created_time between #{params.questionTime[0], jdbcType=TIMESTAMP} and #{params.questionTime[1], jdbcType=TIMESTAMP}
+    </if>
+    <if test="sortColumn !=null and sortColumn != ''">
+        order by ${sortColumn} ${sortMethod}
+    </if>
+    limit #{index}, #{pageSize}
+  </select>
+
+  <select id="getCountByPage" resultType="java.lang.Integer">
+    select count(*)
+    from ex_answer a left join sys_user su1 on a.created_by = su1.user_id
+                     left join sys_user su2 on a.update_by = su2.user_id
+    where a.is_deleted = 0
+    <if test="params.answerContent != null and params.answerContent != ''">
+        and a.answer_content like concat(#{params.answerContent}, '%')
+    </if>
+    <if test="params.isRight != null and params.isRight != ''">
+        and a.is_right = #{params.isRight}
+    </if>
+    <if test="params.createdUserName != null and params.createdUserName != ''">
+        and su1.username like concat(#{params.createdUserName}, '%')
+    </if>
+    <if test="params.isEnabled != null">
+        and a.is_enabled = #{params.isEnabled}
+    </if>
+    <if test="params.questionTime != null">
+        and a.created_time between #{params.questionTime[0], jdbcType=TIMESTAMP} and #{params.questionTime[1], jdbcType=TIMESTAMP}
+    </if>
+  </select>
+
+  <select id="getAnswerContentForFrontByQuestionId" resultType="xyz.fusheng.exam.core.entity.Answer">
+    select answer_id, answer_content, answer_image, answer_video, answer_code, answer_sort
+    from ex_answer
+    where question_id = #{questionId}
+    order by answer_sort asc
+  </select>
+
+</mapper>

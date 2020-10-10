@@ -7,6 +7,7 @@ import io.swagger.annotations.ApiModelProperty;
 import java.util.Date;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
  /**
@@ -16,6 +17,7 @@ import lombok.NoArgsConstructor;
 
 @ApiModel(value="xyz-fusheng-exam-core-entity-LoginLog")
 @Data
+@EqualsAndHashCode(callSuper=true)
 @AllArgsConstructor
 @NoArgsConstructor
 @TableName("sys_login_log")

@@ -1,21 +1,21 @@
 package xyz.fusheng.exam.core.vo; /**
  * @author: code-fusheng
- * @Date: 2020/10/8 0:29
+ * @Date: 2020/10/10 14:27
  */
 
 import lombok.Data;
-import xyz.fusheng.exam.core.entity.Repository;
+import xyz.fusheng.exam.core.entity.Answer;
 
 /**
- * @FileName: RepositoryVo
+ * @FileName: AnswerVo
  * @Author: code-fusheng
- * @Date: 2020/10/8 0:29
+ * @Date: 2020/10/10 14:27
  * @version: 1.0
- * Description: 题库视图对象
+ * Description: 答案视图对相爱那个
  */
 
 @Data
-public class RepositoryVo extends Repository {
+public class AnswerVo extends Answer {
 
     /**
      * 创建者用户名
