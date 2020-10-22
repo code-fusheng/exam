@@ -2,7 +2,10 @@ package xyz.fusheng.exam.core.service;
 
 import xyz.fusheng.exam.common.utils.Page;
 import xyz.fusheng.exam.core.dto.QuestionDto;
+import xyz.fusheng.exam.core.entity.Question;
 import xyz.fusheng.exam.core.vo.QuestionVo;
+
+import java.util.List;
 
 /**
  * @author: code-fusheng
@@ -55,4 +58,32 @@ public interface QuestionService {
      * @return
      */
     QuestionVo getQuestionVoWithAnswersForFrontById(Long questionId);
+
+    /**
+     * 根据试题id判断当前问题是否有试卷使用
+     * @param questionIds
+     * @return
+     */
+    boolean judgeExistQuestionUsedByPaper(Long[] questionIds);
+
+    /**
+     * 分页查询考试试卷答案列表
+     * @param page
+     * @return
+     */
+    Page<QuestionVo> getQuestionVoListByPageForFront(Page<QuestionVo> page);
+
+    /**
+     * 分页查询试题题库列表
+     * @param page
+     * @return
+     */
+    Page<Question> getQuestionListByPage(Page<Question> page);
+
+    /**
+     * 后台获取试卷试题列表以及答案详情
+     * @param paperId
+     * @return
+     */
+    List<QuestionVo> getQuestionVoListByPaperIdForPaperInfo(Long paperId);
 }

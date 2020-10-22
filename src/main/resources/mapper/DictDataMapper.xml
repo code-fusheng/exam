@@ -37,7 +37,7 @@
                            left join sys_user su2 on sdd.update_by = su2.user_id
     where sdd.is_deleted = 0
     <if test="params.dictType != null and params.dictType != ''">
-        and sdd.dict_type like concat(#{params.dictType}, '%')
+        and sdd.dict_type = #{params.dictType}
     </if>
     <if test="params.dictLabel != null and params.dictLabel != ''">
         and sdd.dict_label like concat(#{params.dictLabel}, '%')

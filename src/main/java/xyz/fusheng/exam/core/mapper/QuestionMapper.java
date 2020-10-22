@@ -40,4 +40,54 @@ public interface QuestionMapper extends BaseMapper<Question> {
      * @return
      */
     Question getQuestionContentForFrontById(Long questionId);
+
+    /**
+     * 根据试题id获取中间表题库Ids
+     * @param questionId
+     * @return
+     */
+    List<Long> getRepositoryByQuestionId(Long questionId);
+
+    /**
+     * 根据试卷编号获取试题编号列表
+     * @param paperId
+     * @return
+     */
+    List<Long> getQuestionIdsByPaperId(Long paperId);
+
+    /**
+     * 根据试卷编号与试题编号查询试题排序
+     * @param paperId
+     * @param questionId
+     * @return
+     */
+    Integer getQuestionSortByPaperIdAndQuestionId(Long paperId, Long questionId);
+
+    /**
+     * 分页查询考试试卷试题
+     * @param page
+     * @return
+     */
+    List<QuestionVo> getQuestionVoListByPageForFront(Page<QuestionVo> page);
+
+    /**
+     * 获取考试试卷试题分页总数
+     * @param page
+     * @return
+     */
+    int getTotalCountByPageForFront(Page<QuestionVo> page);
+
+    /**
+     * 获取题库试题列表分页
+     * @param page
+     * @return
+     */
+    List<Question> getQuestionListByPage(Page<Question> page);
+
+    /**
+     * 统计分页总数
+     * @param page
+     * @return
+     */
+    int getTotalCountByPageForQuestionList(Page<Question> page);
 }

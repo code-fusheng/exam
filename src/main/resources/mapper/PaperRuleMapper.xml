@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="xyz.fusheng.exam.core.mapper.PaperRuleMapper">
+  <resultMap id="BaseResultMap" type="xyz.fusheng.exam.core.entity.PaperRule">
+    <!--@mbg.generated-->
+    <!--@Table ex_paper_rule-->
+    <id column="paper_rule_id" jdbcType="BIGINT" property="paperRuleId" />
+    <result column="paper_rule_name" jdbcType="VARCHAR" property="paperRuleName" />
+    <result column="total_score" jdbcType="INTEGER" property="totalScore" />
+    <result column="total_time" jdbcType="INTEGER" property="totalTime" />
+    <result column="eligibility_score" jdbcType="INTEGER" property="eligibilityScore" />
+    <result column="repository_id" jdbcType="BIGINT" property="repositoryId" />
+    <result column="single_count" jdbcType="INTEGER" property="singleCount" />
+    <result column="single_score" jdbcType="INTEGER" property="singleScore" />
+    <result column="multiple_count" jdbcType="INTEGER" property="multipleCount" />
+    <result column="multiple_score" jdbcType="INTEGER" property="multipleScore" />
+    <result column="fill_count" jdbcType="INTEGER" property="fillCount" />
+    <result column="fill_score" jdbcType="INTEGER" property="fillScore" />
+    <result column="judge_count" jdbcType="INTEGER" property="judgeCount" />
+    <result column="judge_score" jdbcType="INTEGER" property="judgeScore" />
+    <result column="short_count" jdbcType="INTEGER" property="shortCount" />
+    <result column="short_score" jdbcType="INTEGER" property="shortScore" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="created_time" jdbcType="TIMESTAMP" property="createdTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="created_by" jdbcType="BIGINT" property="createdBy" />
+    <result column="update_by" jdbcType="BIGINT" property="updateBy" />
+    <result column="version" jdbcType="INTEGER" property="version" />
+    <result column="is_deleted" jdbcType="BOOLEAN" property="isDeleted" />
+    <result column="is_enabled" jdbcType="BOOLEAN" property="isEnabled" />
+  </resultMap>
+
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    paper_rule_id, paper_rule_name, total_score, total_time, eligibility_score, repository_id, single_count,
+    single_score, multiple_count, multiple_score, fill_count, fill_score, judge_count,
+    judge_score, short_count, short_score, remark, created_time, update_time, created_by,
+    update_by, version, is_deleted, is_enabled
+  </sql>
+
+  <select id="getPaperRuleVoById" resultType="xyz.fusheng.exam.core.vo.PaperRuleVo">
+      select pr.*, su1.username as createdUserName, su2.username as updateUserName
+      from ex_paper_rule pr left join sys_user su1 on pr.created_by = su1.user_id
+                         left join sys_user su2 on pr.update_by = su2.user_id
+      where pr.paper_rule_id = #{paperRuleId} and pr.is_deleted = 0
+  </select>
+
+  <select id="getByPage" resultType="xyz.fusheng.exam.core.vo.PaperRuleVo">
+      select pr.*, su1.username as createdUserName, su2.username as updateUserName
+      from ex_paper_rule pr left join sys_user su1 on pr.created_by = su1.user_id
+                         left join sys_user su2 on pr.update_by = su2.user_id
+      where pr.is_deleted = 0
+      <if test="params.paperRuleName != null and params.paperRuleName != ''">
+        and pr.paper_rule_name like concat(#{params.paperRuleName}, '%')
+      </if>
+      <if test="params.createdUserName != null and params.createdUserName != ''">
+        and su1.username like concat(#{params.createdUserName}, '%')
+      </if>
+      <if test="params.isEnabled != null">
+        and pr.is_enabled = #{params.isEnabled}
+      </if>
+      <if test="params.paperRuleTime != null">
+        and pr.created_time between #{params.paperRuleTime[0], jdbcType=TIMESTAMP} and #{params.paperRuleTime[1], jdbcType=TIMESTAMP}
+      </if>
+      <if test="sortColumn !=null and sortColumn != ''">
+        order by ${sortColumn} ${sortMethod}
+      </if>
+      limit #{index}, #{pageSize}
+  </select>
+
+  <select id="getCountByPage" resultType="java.lang.Integer">
+      select count(*)
+      from ex_paper_rule pr left join sys_user su1 on pr.created_by = su1.user_id
+                         left join sys_user su2 on pr.update_by = su2.user_id
+      where pr.is_deleted = 0
+      <if test="params.paperRuleName != null and params.paperRuleName != ''">
+        and pr.paper_rule_name like concat(#{params.paperRuleName}, '%')
+      </if>
+      <if test="params.createdUserName != null and params.createdUserName != ''">
+        and su1.username like concat(#{params.createdUserName}, '%')
+      </if>
+      <if test="params.isEnabled != null">
+        and pr.is_enabled = #{params.isEnabled}
+      </if>
+      <if test="params.paperRuleTime != null">
+        and pr.created_time between #{params.paperRuleTime[0], jdbcType=TIMESTAMP} and #{params.paperRuleTime[1], jdbcType=TIMESTAMP}
+      </if>
+  </select>
+
+   <select id="getSimpleRuleList" resultType="xyz.fusheng.exam.core.entity.PaperRule">
+        select paper_rule_id, paper_rule_name
+        from ex_paper_rule
+        where is_deleted = 0 and is_enabled = 1
+  </select>
+
+</mapper>

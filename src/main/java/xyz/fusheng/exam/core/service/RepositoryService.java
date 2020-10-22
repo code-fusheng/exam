@@ -2,7 +2,10 @@ package xyz.fusheng.exam.core.service;
 
 import xyz.fusheng.exam.common.utils.Page;
 import xyz.fusheng.exam.core.dto.RepositoryDto;
+import xyz.fusheng.exam.core.entity.Repository;
 import xyz.fusheng.exam.core.vo.RepositoryVo;
+
+import java.util.List;
 
 /**
  * @author: code-fusheng
@@ -41,4 +44,10 @@ public interface RepositoryService {
      * @return
      */
     Page<RepositoryVo> getByPage(Page<RepositoryVo> page);
+
+    /**
+     * 查询所有可用题库
+     * @return
+     */
+    List<Repository> getList();
 }

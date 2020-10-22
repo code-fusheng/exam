@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="xyz.fusheng.exam.core.mapper.PaperMapper">
+  <resultMap id="BaseResultMap" type="xyz.fusheng.exam.core.entity.Paper">
+    <!--@mbg.generated-->
+    <!--@Table ex_paper-->
+    <id column="paper_id" jdbcType="BIGINT" property="paperId" />
+    <result column="paper_name" jdbcType="VARCHAR" property="paperName" />
+    <result column="paper_rule_id" jdbcType="BIGINT" property="paperRuleId" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="analysis" jdbcType="VARCHAR" property="analysis" />
+    <result column="created_time" jdbcType="TIMESTAMP" property="createdTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="created_by" jdbcType="BIGINT" property="createdBy" />
+    <result column="update_by" jdbcType="BIGINT" property="updateBy" />
+    <result column="version" jdbcType="INTEGER" property="version" />
+    <result column="is_deleted" jdbcType="INTEGER" property="isDeleted" />
+    <result column="is_enabled" jdbcType="INTEGER" property="isEnabled" />
+  </resultMap>
+
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    paper_id, paper_name, paper_rule_id, remark, analysis, created_time, update_time,
+    created_by, update_by, version, is_deleted, is_enabled
+  </sql>
+
+    <select id="getPaperVoById" resultType="xyz.fusheng.exam.core.vo.PaperVo">
+        select p.*, su1.username as createdUserName, su2.username as updateUserName
+        from ex_paper p left join sys_user su1 on p.created_by = su1.user_id
+                           left join sys_user su2 on p.update_by = su2.user_id
+        where p.paper_id = #{paperId} and p.is_deleted = 0
+    </select>
+
+    <select id="getByPage" resultType="xyz.fusheng.exam.core.vo.PaperVo">
+        select p.*, pr.paper_rule_name as paperRuleName, su1.username as createdUserName, su2.username as updateUserName
+        from ex_paper p left join sys_user su1 on p.created_by = su1.user_id
+                           left join sys_user su2 on p.update_by = su2.user_id
+                           left join ex_paper_rule pr on p.paper_rule_id = pr.paper_rule_id
+        where p.is_deleted = 0
+        <if test="params.paperName != null and params.paperName != ''">
+            and p.paper_name like concat(#{params.paperName}, '%')
+        </if>
+        <if test="params.createdUserName != null and params.createdUserName != ''">
+            and su1.username like concat(#{params.createdUserName}, '%')
+        </if>
+        <if test="params.paperRuleId != null">
+            and p.paper_rule_id = #{params.paperRuleId}
+        </if>
+        <if test="params.isEnabled != null">
+            and p.is_enabled = #{params.isEnabled}
+        </if>
+        <if test="params.paperTime != null">
+            and p.created_time between #{params.paperTime[0], jdbcType=TIMESTAMP} and #{params.paperTime[1], jdbcType=TIMESTAMP}
+        </if>
+        <if test="sortColumn !=null and sortColumn != ''">
+            order by ${sortColumn} ${sortMethod}
+        </if>
+        limit #{index}, #{pageSize}
+    </select>
+
+    <select id="getCountByPage" resultType="java.lang.Integer">
+        select count(*)
+        from ex_paper p left join sys_user su1 on p.created_by = su1.user_id
+                           left join sys_user su2 on p.update_by = su2.user_id
+        where p.is_deleted = 0
+        <if test="params.paperName != null and params.paperName != ''">
+            and p.paper_name like concat(#{params.paperName}, '%')
+        </if>
+        <if test="params.createdUserName != null and params.createdUserName != ''">
+            and su1.username like concat(#{params.createdUserName}, '%')
+        </if>
+        <if test="params.paperRuleId != null">
+            and p.paper_rule_id = #{params.paperRuleId}
+        </if>
+        <if test="params.isEnabled != null">
+            and p.is_enabled = #{params.isEnabled}
+        </if>
+        <if test="params.paperTime != null">
+            and p.created_time between #{params.paperTime[0], jdbcType=TIMESTAMP} and #{params.paperTime[1], jdbcType=TIMESTAMP}
+        </if>
+    </select>
+
+    <insert id="savePaperAndQuestionAndScore" parameterType="xyz.fusheng.exam.core.dto.QuestionDto">
+        insert into ex_paper_question(paper_id, question_id, question_type_id, question_sort, question_score)
+        values (#{paperId}, #{questionId}, #{questionTypeId}, #{questionSort}, #{questionScore})
+    </insert>
+
+    <delete id="deleteQuestionForPaperById" parameterType="java.lang.Long">
+        delete from ex_paper_question where question_id = #{questionId} and paper_id = #{paperId}
+    </delete>
+
+    <select id="judgeExistQuestionUsedByPaperId" parameterType="java.lang.Long" resultType="java.lang.Integer">
+        select count(*)
+        from ex_paper_question
+        where question_id = #{questionId}
+    </select>
+
+    <select id="getPaperVoListByExamId" parameterType="java.lang.Long" resultType="xyz.fusheng.exam.core.vo.PaperVo">
+        select p.paper_id, p.paper_name, ep.priority_level as priorityLevel
+        from ex_exam_paper ep left join ex_paper p on ep.paper_id = p.paper_id
+        where ep.exam_id = #{examId} and p.is_deleted = 0
+    </select>
+</mapper>

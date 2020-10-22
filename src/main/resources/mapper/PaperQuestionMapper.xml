@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="xyz.fusheng.exam.core.mapper.PaperQuestionMapper">
+  <resultMap id="BaseResultMap" type="xyz.fusheng.exam.core.entity.PaperQuestion">
+    <!--@mbg.generated-->
+    <!--@Table ex_paper_question-->
+    <id column="paper_id" jdbcType="BIGINT" property="paperId" />
+    <id column="question_id" jdbcType="BIGINT" property="questionId" />
+    <result column="question_type_id" jdbcType="INTEGER" property="questionTypeId" />
+    <result column="question_sort" jdbcType="INTEGER" property="questionSort" />
+    <result column="question_score" jdbcType="INTEGER" property="questionScore" />
+    <result column="created_time" jdbcType="TIMESTAMP" property="createdTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    paper_id, question_id, question_type_id, question_sort, question_score, created_time,
+    update_time
+  </sql>
+
+  <select id="getPaperWithQuestionInfoById" parameterType="java.lang.Long" resultType="xyz.fusheng.exam.core.entity.PaperQuestion">
+    select * from ex_paper_question where paper_id = #{paperId} and question_id = #{questionId}
+  </select>
+
+</mapper>

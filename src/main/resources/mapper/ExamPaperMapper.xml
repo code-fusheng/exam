@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="xyz.fusheng.exam.core.mapper.ExamPaperMapper">
+  <resultMap id="BaseResultMap" type="xyz.fusheng.exam.core.entity.ExamPaper">
+    <!--@mbg.generated-->
+    <!--@Table ex_exam_paper-->
+    <id column="exam_id" jdbcType="BIGINT" property="examId" />
+    <id column="paper_id" jdbcType="BIGINT" property="paperId" />
+    <result column="priority_level" jdbcType="BOOLEAN" property="priorityLevel" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="created_time" jdbcType="TIMESTAMP" property="createdTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    exam_id, paper_id, priority_level, remark, created_time, update_time
+  </sql>
+</mapper>

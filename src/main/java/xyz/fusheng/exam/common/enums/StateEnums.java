@@ -43,6 +43,18 @@ public enum StateEnums {
     REQUEST_ERROR(0, "请求异常"),
 
     /**
+     * 是否公开
+     */
+    IS_PUBLIC(1, "公开"),
+    NO_PUBLIC(0, "不公开"),
+
+    /**
+     * 是否限时, 考试开始与截止时间，非考试时长
+     */
+    IS_LIMIT_TIME(1, "限时"),
+    NO_LIMIT_TIME(0, "不限时"),
+
+    /**
      * 消息状态枚举
      */
     MESSAGE_IS_READ(1, "消息已读"),
@@ -94,7 +106,7 @@ public enum StateEnums {
      */
     private Integer code;
     private String msg;
-    
+
     StateEnums(Integer code, String msg) {
         this.code = code;
         this.msg = msg;

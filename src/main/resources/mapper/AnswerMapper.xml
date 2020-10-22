@@ -91,4 +91,12 @@
     order by answer_sort asc
   </select>
 
+  <select id="getAnswerListByQuestionIdForFront" resultType="xyz.fusheng.exam.core.entity.Answer">
+    select answer_id, answer_content, answer_image, answer_video, answer_code, answer_sort
+    from ex_answer
+    where question_id = #{questionId}
+    order by answer_sort asc
+  </select>
+
+
 </mapper>

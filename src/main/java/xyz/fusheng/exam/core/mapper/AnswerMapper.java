@@ -40,5 +40,12 @@ public interface AnswerMapper extends BaseMapper<Answer> {
      * @return
      */
     List<Answer> getAnswerContentForFrontByQuestionId(Long questionId);
+
+    /**
+     * 根据试题编号查询选项列表（不带答案标志）
+     * @param questionId
+     * @return
+     */
+    List<Answer> getAnswerListByQuestionIdForFront(Long questionId);
 }
 

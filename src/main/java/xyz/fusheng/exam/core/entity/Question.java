@@ -19,7 +19,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @TableName("ex_question")
-public class Question extends BaseEntity{
+public class Question extends BaseEntity {
     /**
     * 试题编号
     */

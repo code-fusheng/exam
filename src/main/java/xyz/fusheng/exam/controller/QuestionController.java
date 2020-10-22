@@ -51,8 +51,13 @@ public class QuestionController {
      * @return
      */
     @ApiOperation(value = "删除试题", notes = "删除试题")
-    @DeleteMapping("/deleteByIds/{questionIds}")
-    public Result<Object> deleteByIds(@PathVariable Long[] questionIds) {
+    @DeleteMapping("/deleteByIds")
+    public Result<Object> deleteByIds(@RequestBody Long[] questionIds) {
+        // 查询需要删除的试卷是否有被其他试卷采用
+        boolean judgeResult =  questionService.judgeExistQuestionUsedByPaper(questionIds);
+        if (judgeResult == true) {
+            return new Result<>(ResultEnums.ERROR.getCode(), "操作提示: 批量删除试题目标存在引用!");
+        }
         questionService.deleteByIds(questionIds);
         return new Result<>("操作提示: 删除成功!");
     }
@@ -108,10 +113,11 @@ public class QuestionController {
     }
 
     /**
-     * 根据id获取试题以及答案信息 - 后台
+     * 根据id获取试题以及答案详细信息(answerContent&isRight) - 后台
      * @param questionId
      * @return
      */
+    @ApiOperation(value = "查询试题与答案详情")
     @GetMapping("/getQuestionVoWithAnswers/{questionId}")
     public Result<QuestionVo> getQuestionVoWithAnswersById(@PathVariable Long questionId) {
         QuestionVo questionVo = questionService.getQuestionVoWithAnswers(questionId);
@@ -119,14 +125,60 @@ public class QuestionController {
     }
 
     /**
-     * 根据id获取试题以及答案简单信息 - 前台
+     * 根据id获取试题以及选项信息（answerContent） - 前台
      * @param questionId
      * @return
      */
+    @ApiOperation(value = "查询试题与选项信息")
     @GetMapping("/getQuestionVoWithAnswersForFront/{questionId}")
     public Result<QuestionVo> getQuestionVoWithAnswersForFrontById(@PathVariable Long questionId) {
         QuestionVo questionVo = questionService.getQuestionVoWithAnswersForFrontById(questionId);
         return new Result<>("操作提示: 查询成功!", questionVo);
+    }
+
+    /**
+     * 分页查询考试试卷试题与选项列表（不含答案）
+     * @param page
+     * @return
+     */
+    @PostMapping("/getQuestionVoListByPageForFront")
+    public Result<Page<QuestionVo>> getQuestionVoListByPageForFront(@RequestBody Page<QuestionVo> page) {
+        page = questionService.getQuestionVoListByPageForFront(page);
+        return new Result<>("操作提示: 查询成功!", page);
+    }
+
+    /**
+     * 分页查询题库试题列表
+     * @param page
+     * @return
+     */
+    @PostMapping("/getQuestionListByPage")
+    public Result<Page<Question>> getQuestionListByPage(@RequestBody Page<Question> page) {
+        String sortColumn = page.getSortColumn();
+        // 驼峰转下划线
+        String newSortColumn = StringUtils.upperCharToUnderLine(sortColumn);
+        page.setSortColumn(newSortColumn);
+        if (StringUtils.isNotBlank(sortColumn)) {
+            // 题目名、题目总数、创建时间、更新时间
+            String[] sortColumns = {"question_type_id", "question_tag_id", "created_time", "update_time"};
+            List<String> sortList = Arrays.asList(sortColumns);
+            if (!sortList.contains(newSortColumn.toLowerCase())) {
+                return new Result<>(ResultEnums.ERROR.getCode(), "操作提示: 参数错误!");
+            }
+        }
+        page = questionService.getQuestionListByPage(page);
+        return new Result<>("操作提示: 分页查询题库试题列表!", page);
+    }
+
+    /**
+     * 后台查询试卷试题以及答案列表
+     * @param paperId
+     * @return
+     */
+    @GetMapping("/getQuestionVoListByPaperIdForPaperInfo/{paperId}")
+    public Result<List<QuestionVo>> getQuestionVoListByPaperIdForPaperInfo(@PathVariable Long paperId) {
+        List<QuestionVo> questionVoList = questionService.getQuestionVoListByPaperIdForPaperInfo(paperId);
+        return new Result<>("操作提示: 查询试卷试题列表!", questionVoList);
     }
 
 }

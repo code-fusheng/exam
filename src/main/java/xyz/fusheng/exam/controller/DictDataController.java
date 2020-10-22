@@ -50,8 +50,8 @@ public class DictDataController {
      * @param dictIds
      * @return
      */
-    @DeleteMapping("/deleteByIds/{dictIds}")
-    public Result<Object> deleteByIds(@PathVariable Long[] dictIds) {
+    @DeleteMapping("/deleteByIds")
+    public Result<Object> deleteByIds(@RequestBody Long[] dictIds) {
         dictDataService.deleteByIds(dictIds);
         return new Result<>("操作提示: 删除成功!");
     }

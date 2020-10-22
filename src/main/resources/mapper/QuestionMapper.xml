@@ -36,12 +36,17 @@
   </select>
 
   <select id="getByPage" resultType="xyz.fusheng.exam.core.vo.QuestionVo" parameterType="xyz.fusheng.exam.common.utils.Page">
-    select q.*, su1.username as createdUserName, su2.username as updateUserName
+    select q.*, rq.repository_id as repositoryId, r.repository_name as repositoryName, su1.username as createdUserName, su2.username as updateUserName
     from ex_question q left join sys_user su1 on q.created_by = su1.user_id
                        left join sys_user su2 on q.update_by = su2.user_id
+                       left join ex_repository_question rq on q.question_id = rq.question_id
+                       left join ex_repository r on rq.repository_id = r.repository_id
     where q.is_deleted = 0
     <if test="params.questionContent != null and params.questionContent != ''">
         and q.question_content like concat(#{params.questionContent}, '%')
+    </if>
+    <if test="params.repositoryId != null">
+        and rq.repository_id = #{params.repositoryId}
     </if>
     <if test="params.questionTypeId != null">
         and q.question_type_id = #{params.questionTypeId}
@@ -68,6 +73,8 @@
     select count(*)
     from ex_question q left join sys_user su1 on q.created_by = su1.user_id
                        left join sys_user su2 on q.update_by = su2.user_id
+                       left join ex_repository_question rq on q.question_id = rq.question_id
+                       left join ex_repository r on rq.repository_id = r.repository_id
     where q.is_deleted = 0
     <if test="params.questionContent != null and params.questionContent != ''">
         and q.question_content like concat(#{params.questionContent}, '%')
@@ -77,6 +84,9 @@
     </if>
     <if test="params.questionTagId != null">
         and q.question_tag_id = #{params.questionTagId}
+    </if>
+    <if test="params.repositoryId != null">
+        and rq.repository_id = #{params.repositoryId}
     </if>
     <if test="params.createdUserName != null and params.createdUserName != ''">
         and su1.username like concat(#{params.createdUserName}, '%')
@@ -94,5 +104,73 @@
     question_tag_id
     from ex_question
     where question_id = #{questionId}
+  </select>
+
+  <select id="getRepositoryByQuestionId" resultType="java.lang.Long">
+    select repository_id from ex_repository_question where question_id = #{questionId}
+  </select>
+
+  <select id="getQuestionIdsByPaperId" resultType="java.lang.Long">
+    select question_id from ex_paper_question where paper_id = #{paperId}
+    order by question_type_id asc, question_sort asc
+  </select>
+
+  <select id="getQuestionSortByPaperIdAndQuestionId" resultType="java.lang.Integer">
+    select question_sort from ex_paper_question where paper_id = #{paperId} and question_id = #{questionId}
+  </select>
+
+  <select id="getQuestionVoListByPageForFront" resultType="xyz.fusheng.exam.core.vo.QuestionVo" parameterType="xyz.fusheng.exam.common.utils.Page">
+    select q.question_id, q.question_type_id, q.question_content, q.question_image, q.question_video, q.question_code,
+           pq.question_sort as questionSort, pq.question_score as questionScore
+    from ex_question q left join ex_paper_question pq on q.question_id = pq.question_id
+    where q.is_deleted = 0 and pq.paper_id = #{params.paperId}
+    order by q.question_type_id asc, pq.question_sort asc
+    limit #{index}, #{pageSize}
+  </select>
+
+  <select id="getTotalCountByPageForFront" resultType="java.lang.Integer">
+    select count(*)
+    from ex_question q left join ex_paper_question pq on q.question_id = pq.question_id
+    where q.is_deleted = 0 order by q.question_type_id asc, pq.question_sort asc
+  </select>
+
+  <select id="getQuestionListByPage" resultType="xyz.fusheng.exam.core.entity.Question">
+    select q.question_id, q.question_content, q.question_image, q.question_video, q.question_code, q.question_type_id, q.question_tag_id, q.created_time
+    from ex_repository_question rq left join ex_question q on rq.question_id = q.question_id
+    where q.is_deleted = 0 and q.is_enabled = 1
+    <if test="params.questionContent != null and params.questionContent != ''">
+        and q.question_content like concat(#{params.questionContent}, '%')
+    </if>
+    <if test="params.repositoryId != null">
+        and rq.repository_id = #{params.repositoryId}
+    </if>
+    <if test="params.questionTypeId != null">
+        and q.question_type_id = #{params.questionTypeId}
+    </if>
+    <if test="params.questionTagId != null">
+        and q.question_tag_id = #{params.questionTagId}
+    </if>
+    <if test="sortColumn !=null and sortColumn != ''">
+        order by q.${sortColumn} ${sortMethod}
+    </if>
+    limit #{index}, #{pageSize}
+  </select>
+
+  <select id="getTotalCountByPageForQuestionList" resultType="java.lang.Integer">
+    select count(*)
+    from ex_repository_question rq left join ex_question q on rq.question_id = q.question_id
+    where q.is_deleted = 0 and q.is_enabled = 1
+    <if test="params.questionContent != null and params.questionContent != ''">
+        and q.question_content like concat(#{params.questionContent}, '%')
+    </if>
+    <if test="params.repositoryId != null">
+        and rq.repository_id = #{params.repositoryId}
+    </if>
+    <if test="params.questionTypeId != null">
+        and q.question_type_id = #{params.questionTypeId}
+    </if>
+    <if test="params.questionTagId != null">
+        and q.question_tag_id = #{params.questionTagId}
+    </if>
   </select>
 </mapper>

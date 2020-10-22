@@ -72,4 +72,22 @@
     </if>
   </select>
 
+  <select id="getSimpleRepositoryList" resultType="xyz.fusheng.exam.core.entity.Repository">
+        select repository_id, repository_name
+        from ex_repository
+        where is_deleted = 0 and is_enabled = 1
+  </select>
+
+  <insert id="saveRepositoryAndQuestion">
+        insert into ex_repository_question(repository_id, question_id) values (#{repositoryId}, #{questionId})
+  </insert>
+
+  <select id="getRepositoryIdByQuestionId" resultType="java.lang.Long">
+        select repository_id from ex_repository_question where question_id = #{questionId}
+  </select>
+
+  <delete id="deleteRepositoryAndQuestionByQuestionId">
+        delete from ex_repository_question where question_id = #{questionId}
+  </delete>
+
 </mapper>

@@ -1,9 +1,11 @@
 package xyz.fusheng.exam.core.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 
+import xyz.fusheng.exam.common.enums.StateEnums;
 import xyz.fusheng.exam.common.utils.Page;
 import xyz.fusheng.exam.common.utils.SecurityUtil;
 import xyz.fusheng.exam.core.dto.RepositoryDto;
@@ -90,6 +92,16 @@ public class RepositoryServiceImpl implements RepositoryService{
         int totalCount = repositoryMapper.getCountByPage(page);
         page.setTotalCount(totalCount);
         return page;
+    }
+
+    /**
+     * 查询所有可用题库列表
+     * @return
+     */
+    @Override
+    public List<Repository> getList() {
+        List<Repository> repositoryList = repositoryMapper.getSimpleRepositoryList();
+        return repositoryList;
     }
 
 }

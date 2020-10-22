@@ -3,6 +3,7 @@ package xyz.fusheng.exam.core.vo; /**
  * @Date: 2020/10/9 19:38
  */
 
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import xyz.fusheng.exam.core.entity.Answer;
 import xyz.fusheng.exam.core.entity.Question;
@@ -35,5 +36,30 @@ public class QuestionVo extends Question {
      * 答案列表
      */
     private List<Answer> answerList = new ArrayList<>();
+
+    /**
+     * 试题在试卷中的排序
+     */
+    private Integer questionSort;
+
+    /**
+     * 题库编号
+     */
+    private Long repositoryId;
+
+    /**
+     * 题库名称
+     */
+    private String repositoryName;
+
+    /**
+     * 试卷编号
+     */
+    private Long paperId;
+
+    /**
+     * 试题分数
+     */
+    private Integer questionScore;
 
 }

@@ -8,7 +8,6 @@ import xyz.fusheng.exam.common.utils.*;
 import xyz.fusheng.exam.core.dto.RepositoryDto;
 import xyz.fusheng.exam.core.entity.Repository;
 import xyz.fusheng.exam.core.service.RepositoryService;
-import xyz.fusheng.exam.core.vo.QuestionVo;
 import xyz.fusheng.exam.core.vo.RepositoryVo;
 
 import javax.annotation.Resource;
@@ -52,8 +51,8 @@ public class RepositoryController {
      * @return
      */
     @ApiOperation(value = "删除题库", notes = "删除题库")
-    @DeleteMapping("/deleteByIds/{repositoryIds}")
-    public Result<Object> deleteByIds(@PathVariable Long[] repositoryIds) {
+    @DeleteMapping("/deleteByIds")
+    public Result<Object> deleteByIds(@RequestBody Long[] repositoryIds) {
         repositoryService.deleteByIds(repositoryIds);
         return new Result<>("操作提示：删除成功!");
     }
@@ -108,5 +107,17 @@ public class RepositoryController {
         page = repositoryService.getByPage(page);
         return new Result<>("操作提示: 分页查询成功!", page);
     }
+
+    /**
+     * 查询可用题库列表 - 添加试题时选择题库所需
+     * @return
+     */
+    @ApiOperation(value = "查询可用题库列表", notes = "添加试题时选择题库所需")
+    @GetMapping("/getList")
+    public Result<List<Repository>> getList() {
+        List<Repository> repositoryList = repositoryService.getList();
+        return new Result<>("操作提示: 查询题库列表成功!", repositoryList);
+    }
+
 
 }

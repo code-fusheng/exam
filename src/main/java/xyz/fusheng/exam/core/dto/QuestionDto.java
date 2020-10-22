@@ -10,8 +10,11 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import xyz.fusheng.exam.core.entity.Answer;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @FileName: QuestionDto
@@ -123,5 +126,34 @@ public class QuestionDto extends BaseDto{
      */
     @ApiModelProperty(value="状态位 1：启用 0：弃用")
     private Integer isEnabled;
+
+    /**
+     * 答案列表
+     */
+    private List<Answer> answerList = new ArrayList<>();
+
+    /**
+     * 题库编号
+     */
+    @ApiModelProperty(value = "题库编号")
+    private Long repositoryId;
+
+    /**
+     * 试卷编号
+     */
+    @ApiModelProperty(value = "试卷编号")
+    private Long paperId;
+
+    /**
+     * 试题排序
+     */
+    @ApiModelProperty(value = "试题排序")
+    private Integer questionSort;
+
+    /**
+     * 试题分数
+     */
+    @ApiModelProperty(value = "试题分值")
+    private Integer questionScore;
 
 }
