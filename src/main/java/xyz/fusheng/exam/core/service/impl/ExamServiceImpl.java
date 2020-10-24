@@ -6,19 +6,20 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 
+import org.springframework.transaction.annotation.Transactional;
+import xyz.fusheng.exam.common.utils.IdWorker;
 import xyz.fusheng.exam.common.utils.Page;
 import xyz.fusheng.exam.core.dto.ExamDto;
 import xyz.fusheng.exam.core.entity.Exam;
 import xyz.fusheng.exam.core.entity.ExamPaper;
 import xyz.fusheng.exam.core.entity.PaperRule;
-import xyz.fusheng.exam.core.mapper.ExamMapper;
-import xyz.fusheng.exam.core.mapper.ExamPaperMapper;
-import xyz.fusheng.exam.core.mapper.PaperMapper;
-import xyz.fusheng.exam.core.mapper.PaperRuleMapper;
+import xyz.fusheng.exam.core.entity.QuestionReply;
+import xyz.fusheng.exam.core.mapper.*;
 import xyz.fusheng.exam.core.service.ExamService;
 import xyz.fusheng.exam.core.vo.ExamVo;
 import xyz.fusheng.exam.core.vo.PaperRuleVo;
 import xyz.fusheng.exam.core.vo.PaperVo;
+import xyz.fusheng.exam.core.vo.QuestionReplyVo;
 
 import java.util.Arrays;
 import java.util.List;
@@ -41,6 +42,9 @@ public class ExamServiceImpl implements ExamService {
 
     @Resource
     private PaperRuleMapper paperRuleMapper;
+
+    @Resource
+    private QuestionReplyMapper questionReplyMapper;
 
     /**
      * 添加考试
@@ -78,6 +82,8 @@ public class ExamServiceImpl implements ExamService {
     public ExamVo getExamVoById(Long examId) {
         // 查询视图对象
         ExamVo examVo = examMapper.getExamVoById(examId);
+        Long currentPaper = paperMapper.getCurrentPaperByExamId(examId);
+        examVo.setCurrentPaperId(currentPaper);
         return examVo;
     }
 
@@ -91,6 +97,12 @@ public class ExamServiceImpl implements ExamService {
         BeanUtils.copyProperties(examDto, exam);
         exam.setUpdateBy(examDto.getOperationUserId());
         examMapper.updateById(exam);
+        // 更新考试试卷
+        examPaperMapper.deleteById(examDto.getExamId());
+        ExamPaper examPaper = new ExamPaper();
+        examPaper.setExamId(examDto.getExamId());
+        examPaper.setPaperId(examDto.getCurrentPaperId());
+        examPaperMapper.insert(examPaper);
     }
 
     /**
@@ -118,6 +130,22 @@ public class ExamServiceImpl implements ExamService {
     public List<PaperVo> getPaperVoListByExamId(Long examId) {
         List<PaperVo> paperVoList = paperMapper.getPaperVoListByExamId(examId);
         return paperVoList;
+    }
+
+    /**
+     * 交卷
+     * @param questionReplyVoList
+     */
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void saveQuestionReplyList(List<QuestionReplyVo> questionReplyVoList) {
+        questionReplyVoList.forEach(questionReplyVo -> {
+            questionReplyVo.setUserAnswer(questionReplyVo.getUserAnswerForFront().toString());
+            QuestionReply questionReply = new QuestionReply();
+            BeanUtils.copyProperties(questionReplyVo, questionReply);
+            questionReply.setReplyId(new IdWorker().nextId());
+            questionReplyMapper.insert(questionReply);
+        });
     }
 
 }

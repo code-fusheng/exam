@@ -63,4 +63,10 @@ public interface PaperMapper extends BaseMapper<Paper> {
      */
     List<PaperVo> getPaperVoListByExamId(Long examId);
 
+    /**
+     * 获取当前考试试卷信息
+     * @param examId
+     * @return
+     */
+    Long getCurrentPaperByExamId(Long examId);
 }

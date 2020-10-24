@@ -100,4 +100,10 @@
         from ex_exam_paper ep left join ex_paper p on ep.paper_id = p.paper_id
         where ep.exam_id = #{examId} and p.is_deleted = 0
     </select>
+
+    <select id="getCurrentPaperByExamId" resultType="java.lang.Long">
+        select paper_id
+        from ex_exam_paper
+        where exam_id = #{examId} order by priority_level asc limit 1
+    </select>
 </mapper>

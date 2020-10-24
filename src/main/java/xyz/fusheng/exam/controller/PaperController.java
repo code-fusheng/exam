@@ -9,6 +9,7 @@ import xyz.fusheng.exam.common.utils.*;
 import xyz.fusheng.exam.core.dto.PaperDto;
 import xyz.fusheng.exam.core.dto.QuestionDto;
 import xyz.fusheng.exam.core.dto.QuestionIdsAndPaperIdDto;
+import xyz.fusheng.exam.core.entity.Paper;
 import xyz.fusheng.exam.core.service.PaperService;
 import xyz.fusheng.exam.core.service.QuestionService;
 import xyz.fusheng.exam.core.vo.PaperVo;
@@ -190,6 +191,16 @@ public class PaperController {
         PaperVo paperVo = paperService.getPaperVoWithRuleByPaperId(paperId);
         return new Result<>("操作提示: 获取试卷与规则信息!", paperVo);
     }
+
+    /**
+     * 获取试卷摘要列表
+     * @return
+     */
+    // @GetMapping("/getPaperListForSelect")
+    // public Result<List<Paper>> getPaperListForSelect() {
+    //     List<Paper> paperList = paperService.getPaperListForSelect();
+    //     return new Result<>("操作提示: 获取试卷摘要列表!", paperList);
+    // }
 
 
 

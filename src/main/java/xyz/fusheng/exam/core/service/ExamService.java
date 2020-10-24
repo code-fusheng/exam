@@ -4,6 +4,7 @@ import xyz.fusheng.exam.common.utils.Page;
 import xyz.fusheng.exam.core.dto.ExamDto;
 import xyz.fusheng.exam.core.vo.ExamVo;
 import xyz.fusheng.exam.core.vo.PaperVo;
+import xyz.fusheng.exam.core.vo.QuestionReplyVo;
 
 import java.util.List;
 
@@ -51,4 +52,10 @@ public interface ExamService {
      * @return
      */
     List<PaperVo> getPaperVoListByExamId(Long examId);
+
+    /**
+     * 交卷
+     * @param questionReplyVoList
+     */
+    void saveQuestionReplyList(List<QuestionReplyVo> questionReplyVoList);
 }

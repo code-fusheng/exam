@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="xyz.fusheng.exam.core.mapper.QuestionReplyMapper">
+  <resultMap id="BaseResultMap" type="xyz.fusheng.exam.core.entity.QuestionReply">
+    <!--@mbg.generated-->
+    <!--@Table ex_question_reply-->
+    <id column="reply_id" jdbcType="BIGINT" property="replyId" />
+    <result column="question_id" jdbcType="BIGINT" property="questionId" />
+    <result column="paper_id" jdbcType="BIGINT" property="paperId" />
+    <result column="exam_id" jdbcType="BIGINT" property="examId" />
+    <result column="user_id" jdbcType="BIGINT" property="userId" />
+    <result column="question_type_id" jdbcType="TINYINT" property="questionTypeId" />
+    <result column="user_answer" jdbcType="VARCHAR" property="userAnswer" />
+    <result column="question_score" jdbcType="INTEGER" property="questionScore" />
+    <result column="actual_score" jdbcType="INTEGER" property="actualScore" />
+    <result column="is_right" jdbcType="TINYINT" property="isRight" />
+    <result column="use_time" jdbcType="INTEGER" property="useTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    reply_id, question_id, paper_id, exam_id, user_id, question_type_id, user_answer, question_score,
+    actual_score, is_right, use_time
+  </sql>
+</mapper>

@@ -27,4 +27,9 @@ public class AnswerVo extends Answer {
      */
     private String updateUserName;
 
+    /**
+     * 是否选中
+     */
+    private Integer isSelect;
+
 }

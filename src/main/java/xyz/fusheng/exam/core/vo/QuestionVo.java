@@ -62,4 +62,9 @@ public class QuestionVo extends Question {
      */
     private Integer questionScore;
 
+    /**
+     * 用户答案
+     */
+    private List<Object> userAnswer = new ArrayList<>();
+
 }

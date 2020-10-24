@@ -132,4 +132,9 @@ public class ExamDto extends BaseDto{
      */
     @ApiModelProperty(value="状态位 1：启用 0：弃用")
     private Integer isEnabled;
+
+    /**
+     * 当前考试的试卷编号
+     */
+    private Long currentPaperId;
 }

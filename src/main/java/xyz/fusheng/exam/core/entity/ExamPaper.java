@@ -40,7 +40,7 @@ public class ExamPaper extends BaseEntity {
     * 优先级 1：最低，10：最高
     */
     @ApiModelProperty(value="优先级 1：最低，10：最高")
-    private Boolean priorityLevel;
+    private Integer priorityLevel;
 
     /**
     * 备注

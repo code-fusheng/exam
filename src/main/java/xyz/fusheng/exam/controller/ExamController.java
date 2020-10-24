@@ -8,8 +8,10 @@ import xyz.fusheng.exam.common.utils.*;
 import xyz.fusheng.exam.core.dto.ExamDto;
 import xyz.fusheng.exam.core.entity.Exam;
 import xyz.fusheng.exam.core.service.ExamService;
+import xyz.fusheng.exam.core.service.QuestionReplyService;
 import xyz.fusheng.exam.core.vo.ExamVo;
 import xyz.fusheng.exam.core.vo.PaperVo;
+import xyz.fusheng.exam.core.vo.QuestionReplyVo;
 
 import javax.annotation.Resource;
 import java.util.Arrays;
@@ -112,5 +114,16 @@ public class ExamController {
     public Result<List<PaperVo>> getPaperVoListByExamId(@PathVariable Long examId) {
         List<PaperVo> paperVoList = examService.getPaperVoListByExamId(examId);
         return new Result<>("操作提示: 获取考试试卷集合!", paperVoList);
+    }
+
+    /**
+     * 添加作答信息（交卷）
+     * @param questionReplyVoList
+     * @return
+     */
+    @PostMapping("/saveQuestionReply")
+    public Result<Object> saveQuestionReply(@RequestBody List<QuestionReplyVo> questionReplyVoList) {
+        examService.saveQuestionReplyList(questionReplyVoList);
+        return new Result<>("操作提示: 添加成功!");
     }
 }

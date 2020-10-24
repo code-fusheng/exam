@@ -5,9 +5,12 @@ spring:
   datasource:
     # 基础属性
     # 腾讯云 mysql 数据库连接
-    url: jdbc:mysql://cdb-csnz8qhs.cd.tencentcdb.com:10087/exam?serverTimezone=GMT%2B8&useUnicode=true&characterEncoding=utf8
-    username: root
-    password: code-fusheng
+#    url: jdbc:mysql://cdb-csnz8qhs.cd.tencentcdb.com:10087/exam?serverTimezone=GMT%2B8&useUnicode=true&characterEncoding=utf8
+#    username: root
+#    password: code-fusheng
+    url: jdbc:mysql://106.52.207.86:3306/exam?serverTimezone=GMT%2B8&useUnicode=true&characterEncoding=utf8
+    username: zh6712
+    password: zh1024
     # 可以不配置，根据url自动识别，建议配置
     driver-class-name: com.mysql.cj.jdbc.Driver
     #以下为druid的配置
