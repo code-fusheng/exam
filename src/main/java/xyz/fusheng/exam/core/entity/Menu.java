@@ -1,12 +1,11 @@
 package xyz.fusheng.exam.core.entity;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableLogic;
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.*;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.util.Date;
+import java.util.List;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -92,4 +91,10 @@ public class Menu extends BaseEntity {
     */
     @ApiModelProperty(value="状态位 1：启用 0：弃用")
     private Integer isEnabled;
+
+     /**
+      * 子权限
+      */
+     @TableField(exist = false)
+     private List<Menu> childList;
 }

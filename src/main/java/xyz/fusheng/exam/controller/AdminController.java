@@ -36,7 +36,8 @@ public class AdminController {
     @GetMapping("/info")
     public Result<User> info() {
         Long userId  = SecurityUtil.getUserId();
-        User userInfo = userService.selectUserInfoById(userId);
+        User userInfo = new User();
+        userInfo = userService.getUserInfoById(userId);
         return new Result<>("操作提示: 成功查询当前用户信息!", userInfo);
     }
 

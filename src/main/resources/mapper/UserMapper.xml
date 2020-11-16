@@ -41,4 +41,39 @@
         where ur.user_id = #{userId}
   </select>
 
+      <select id="getByPage" parameterType="xyz.fusheng.exam.common.utils.Page" resultType="xyz.fusheng.exam.core.entity.User">
+        select user_id, username, phone, mail, header, signature, description, realname, sex, address, created_time,
+        update_time, is_enabled from sys_user
+        where is_deleted = 0
+        <if test="params.username!=null and params.username!=''">
+            and username like concat('%', #{params.username}, '%')
+        </if>
+        <if test="params.userTime!=null">
+            and created_time between #{params.userTime[0],jdbcType=TIMESTAMP} and #{params.userTime[1],jdbcType=TIMESTAMP}
+        </if>
+        <if test="sortColumn!=null and sortColumn!=''">
+            order by ${sortColumn} ${sortMethod}
+        </if>
+        limit #{index}, #{pageSize}
+    </select>
+    <select id="getCountByPage" parameterType="xyz.fusheng.exam.common.utils.Page" resultType="java.lang.Integer">
+        select count(*)
+        from sys_user
+        where is_deleted = 0
+        <if test="params.username!=null and params.username!=''">
+            and username like concat('%', #{params.username}, '%')
+        </if>
+        <if test="params.userTime!=null">
+            and created_time between #{params.userTime[0],jdbcType=TIMESTAMP} and
+            #{params.userTime[1],jdbcType=TIMESTAMP}
+        </if>
+    </select>
+
+    <select id="getUserInfoById" resultType="xyz.fusheng.exam.core.entity.User" parameterType="long">
+        select su.*, sur.role_id, sr.role_name
+        from sys_user su join sys_user_role sur on su.user_id = sur.user_id
+		                join sys_role sr on sur.role_id = sr.role_id
+	    where su.user_id = #{userId}
+    </select>
+
 </mapper>

@@ -1,7 +1,4 @@
-package xyz.fusheng.exam.core.vo; /**
- * @author: code-fusheng
- * @Date: 2020/10/23 10:39
- */
+package xyz.fusheng.exam.core.vo;
 
 import lombok.Data;
 import xyz.fusheng.exam.core.entity.QuestionReply;

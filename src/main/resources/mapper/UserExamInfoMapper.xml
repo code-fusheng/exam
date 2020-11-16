@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="xyz.fusheng.exam.core.mapper.UserExamInfoMapper">
+  <resultMap id="BaseResultMap" type="xyz.fusheng.exam.core.entity.UserExamInfo">
+    <!--@mbg.generated-->
+    <!--@Table ex_user_exam_info-->
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="user_id" jdbcType="BIGINT" property="userId" />
+    <result column="exam_id" jdbcType="BIGINT" property="examId" />
+    <result column="paper_id" jdbcType="BIGINT" property="paperId" />
+    <result column="user_score" jdbcType="INTEGER" property="userScore" />
+    <result column="is_mark" jdbcType="TINYINT" property="isMark" />
+    <result column="is_submit" jdbcType="TINYINT" property="isSubmit" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="created_time" jdbcType="TIMESTAMP" property="createdTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="created_by" jdbcType="BIGINT" property="createdBy" />
+    <result column="update_by" jdbcType="BIGINT" property="updateBy" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    id, user_id, exam_id, paper_id, user_score, is_mark, is_submit, remark, created_time,
+    update_time, created_by, update_by
+  </sql>
+
+
+
+</mapper>

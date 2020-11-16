@@ -182,7 +182,7 @@ public class PaperController {
     }
 
     /**
-     * 获取试卷与规则信息 - 在线考试接口
+     * 获取试卷与规则信息 - 在线考试接口 - 开考
      * @param paperId
      * @return
      */
@@ -191,17 +191,6 @@ public class PaperController {
         PaperVo paperVo = paperService.getPaperVoWithRuleByPaperId(paperId);
         return new Result<>("操作提示: 获取试卷与规则信息!", paperVo);
     }
-
-    /**
-     * 获取试卷摘要列表
-     * @return
-     */
-    // @GetMapping("/getPaperListForSelect")
-    // public Result<List<Paper>> getPaperListForSelect() {
-    //     List<Paper> paperList = paperService.getPaperListForSelect();
-    //     return new Result<>("操作提示: 获取试卷摘要列表!", paperList);
-    // }
-
 
 
 }

@@ -57,7 +57,7 @@ public class UserAuthenticationProvider implements AuthenticationProvider {
         // 角色集合
         Set<GrantedAuthority> authorities = new HashSet<>();
         // 查询用户角色
-        List<Role> roleList = userService.selectRoleByUserId(userInfo.getUserId());
+        List<Role> roleList = userService.selectRolesByUserId(userInfo.getUserId());
         for (Role role : roleList) {
             authorities.add(new SimpleGrantedAuthority("ROLE_" + role.getRoleName()));
         }
